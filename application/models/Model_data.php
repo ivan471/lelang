@@ -35,7 +35,7 @@ class Model_data extends CI_Model
 	}
 	public function tampilkan($limit, $start)
 	{
-		$query = $this->db->query("SELECT * from barang order by status desc limit $start, $limit");
+		$query = $this->db->query("SELECT * from barang where status ='0' order by status desc limit $start, $limit");
 		// $query = $this->db->query("SELECT * from barang");
 		return $query->result_array();
 	}
@@ -80,6 +80,37 @@ class Model_data extends CI_Model
 			$this->db->insert('komentar', $data);
 		}
 	}
-	public function cek_lelang()
-	{ }
+	public function cek_lelang(){
+		$tgl = date('Y-m-d');
+		$this->db->where('berakhir <=', $tgl);
+		$this->db->where('status', '0');
+		$this->db->from('barang');
+		$baris = $this->db->count_all_results(); //total row
+		for ($i=0; $i <$baris ; $i++) {
+			$query = $this->db->query("SELECT * FROM barang where berakhir >= $tgl and status='0' ORDER BY berakhir asc LIMIT 1");
+			$row = $query->row();
+			$kode = $row->kodebarang;
+			$data = array('status' => '1');
+			$this->db->where('kodebarang', $kode);
+			$this->db->update('barang', $data);
+			$query = $this->db->query("SELECT * FROM komentar where kode_barang ='".$kode."' ORDER BY harga_diminta desc LIMIT 1");
+			$row = $query->row();
+			$id_user = $row->id_user;
+			$harga = $row->harga_diminta;
+			$data = [
+				'id_user' => $id_user,
+				'kodebarang' => $kode,
+				'harga' => $harga
+			];
+			$this->db->insert('pembeli', $data);
+		}
+	}
+	public function lelang_end(){
+		$query = $this->db->query("SELECT * from barang where status ='1'");
+		return $query->result_array();
+	}
+	public function get_pembeli(){
+		$query = $this->db->query("SELECT * from pembeli where status ='1'");
+		return $query->result_array();
+	}
 }

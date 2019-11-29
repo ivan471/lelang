@@ -10,6 +10,7 @@ class User extends CI_Controller
 	}
 	public function index()
 	{
+		$this->model_data->cek_lelang();
 		$uid = $this->session->uid;
 		if (isset($uid)) {
 			//Pagination
@@ -61,8 +62,9 @@ class User extends CI_Controller
 	{
 		$uid = $this->session->uid;
 		if (isset($uid)) {
-			$data['brg'] = $this->model_data->tampilkan();
-			$this->load->template('users/lelang_end');
+			$data['end'] = $this->model_data->lelang_end();
+		//	$data['user'] = $this->model_data->get_pembeli();
+			$this->load->template('users/lelang_end',$data);
 		} else {
 			redirect('/login');
 		}

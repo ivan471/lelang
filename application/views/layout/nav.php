@@ -97,6 +97,12 @@
               <p>History Lelang</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="<?= base_url() . 'lelang_end' ?>">
+              <i class="fas fa-history"></i>
+              <p>History Lelang Selesai</p>
+            </a>
+          </li>
         </ul>
       </div>
     </div>

@@ -37,8 +37,10 @@
 						<form class="" action="<?= base_url().'comment/'.$this->session->uid.'/'.$detail['kodebarang'] ?>" method="post">
 							<div class="form-group">
 								<input type="hidden" name="kode_barang" value="<?= $detail['kodebarang']; ?>">
-								<?php if (isset($ds)){ ?>
-									<input class="form-control input-border-bottom" type="number" step="<?= $detail['kelipatan_harga'] ?>" min="<?= $detail['harga_awal']; ?>" name="harga" value="<?= $cekharga['harga_diminta']; ?>">
+								<?php if (isset($ds)){
+									$hasil=  $cekharga['harga_diminta'] + $detail['kelipatan_harga'];
+									?>
+									<input class="form-control input-border-bottom" type="number" step="<?= $detail['kelipatan_harga'] ?>" min="<?= $hasil; ?>" name="harga" value="<?= $hasil; ?>">
 								<?php }else {?>
 									<input class="form-control input-border-bottom" type="number" step="<?= $detail['kelipatan_harga'] ?>" min="<?= $detail['harga_awal']; ?>" name="harga" value="<?= $detail['harga_awal']; ?>">
 								<?php } ?>
