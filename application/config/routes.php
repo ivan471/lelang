@@ -1,13 +1,14 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-$route['input_data']                     = 'Admin/input';
+$route['input_data']                     = 'user/input';
 $route['login']                         = 'user/login';
+$route['profil/(:any)']                         = 'user/profil/$1';
 $route['signin']                         = 'user/signin';
 $route['page_register']                 = 'user/reg';
 $route['register']                         = 'user/register';
 $route['signout']                         = 'user/signout';
-$route['simpan']                         = 'Admin/lelang';
+$route['simpan']                         = 'user/lelang';
 $route['login_user']                     = 'user/signin';
 $route['detail/(:any)']                 = 'user/detail/$1';
 $route['comment/(:num)/(:any)']                 = 'user/comment/$1/$2';

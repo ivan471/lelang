@@ -16,15 +16,16 @@
 										<div class="card-body">
 											<div class="d-flex">
 												<div class="info-post ml-2">
-													<h3><?= $b['nama'] ?></h3>
+													<h3><?= $b['nama_barang'] ?></h3>
 													<p class="date text-muted">Rp.<?= $b['harga_awal'] ?></p>
-													<p>Berakhir pada tanggal : <?= tgl_indo($b['berakhir']); ?></p>
+													<p>Berakhir pada tanggal :</p>
+													<p><?= tgl_indo($b['berakhir']); ?></p>
 												</div>
 											</div>
 											<div class="separator-solid"></div>
 											<?php if (date("Y-m-d") < $b['berakhir']) { ?>
 												<center>
-													<a href="<?= base_url() . 'detail/' . $b['kodebarang']; ?>" class="btn btn-primary btn-rounded btn-sm button-font">Lihat</a>
+													<a href="<?= base_url() . 'detail/' . $b['kode_barang']; ?>" class="btn btn-primary btn-rounded btn-sm button-font">Lihat</a>
 												</center>
 											<?php } else { ?>
 												<div class="alert alert-danger" role="alert">Lelang Ditutup</div>

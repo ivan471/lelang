@@ -13,7 +13,7 @@
 							</div>
 							<div class="col-md-6">
 								<div class="content">
-									<h1><?= $detail['nama']; ?></h1>
+									<h1><?= $detail['nama_barang']; ?></h1>
 									<h4><?= $detail['pemilik']; ?></h4>
 									<div class="row">
 										<div class="col-md-5">
@@ -30,13 +30,16 @@
 						</div>
 					</div>
 				</div>
+				<div class="col-md-6">
+					<p><?= $detail['deskripsi']; ?></p>
+				</div>
 			</div>
 			<div class="col-md-5">
 				<div class="card card-comment-input">
 					<div class="card-body">
-						<form class="" action="<?= base_url().'comment/'.$this->session->uid.'/'.$detail['kodebarang'] ?>" method="post">
+						<form class="" action="<?= base_url().'comment/'.$this->session->uid.'/'.$detail['kode_barang'] ?>" method="post">
 							<div class="form-group">
-								<input type="hidden" name="kode_barang" value="<?= $detail['kodebarang']; ?>">
+								<input type="hidden" name="kode_barang" value="<?= $detail['kode_barang']; ?>">
 								<?php if (isset($ds)){
 									$hasil=  $cekharga['harga_diminta'] + $detail['kelipatan_harga'];
 									?>

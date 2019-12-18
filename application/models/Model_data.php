@@ -11,31 +11,22 @@ class Model_data extends CI_Model
 		$tgl = $this->input->post('lama_lelang');
 		$tgl1 = date("Y/m/d");
 		$data = [
-			'nama' => $this->input->post('nama_barang'),
+			'nama_barang' => $this->input->post('nama_barang'),
 			'harga_awal' => $this->input->post('harga'),
 			'lama_lelang' => $tgl,
 			'berakhir' => date('Y-m-d', strtotime('+' . $tgl . 'days', strtotime($tgl1))),
 			'kelipatan_harga' => $this->input->post('kelipatan'),
 			'link_gambar' => $file['file_name'],
 			'pemilik' => $this->session->nama,
+			'deskripsi' => $this->input->post('deskripsi'),
 			'status' => '0'
 		];
 		$this->db->insert('barang', $data);
 	}
-	public function register()
+
+	public function tampilkan()
 	{
-		$data = [
-			'nama_user' => $this->input->post('nama'),
-			'username' => $this->input->post('username'),
-			'password' => md5($this->input->post('password')),
-			'email' => $this->input->post('email'),
-			'level' => '0'
-		];
-		$this->db->insert('users', $data);
-	}
-	public function tampilkan($limit, $start)
-	{
-		$query = $this->db->query("SELECT * from barang where status ='0' order by status desc limit $start, $limit");
+		$query = $this->db->query("SELECT * from barang where status ='0' ");
 		// $query = $this->db->query("SELECT * from barang");
 		return $query->result_array();
 	}
@@ -47,7 +38,7 @@ class Model_data extends CI_Model
 	}
 	public function detail($id)
 	{
-		$sql = "SELECT * FROM barang WHERE kodebarang='" . $id . "'";
+		$sql = "SELECT * FROM barang WHERE kode_barang='" . $id . "'";
 		$query = $this->db->query($sql);
 		return $query->row_array();
 	}
@@ -66,7 +57,7 @@ class Model_data extends CI_Model
 	{
 		$query = $this->db->query("SELECT * FROM komentar where id_user='" . $id . "' and kode_barang=" . $kode . "");
 		$row = $query->row();
-		$data1 = $row->id_komentar;
+		$data1 = $row['id_komentar'];
 		if (isset($data1)) {
 			$data = array('harga' => $this->input->post('harga'), 'waktu' => date('Y-m-d H:i:s'));
 			$this->db->where('id_komentar', $data1);
@@ -99,10 +90,10 @@ class Model_data extends CI_Model
 			$harga = $row->harga_diminta;
 			$data = [
 				'id_user' => $id_user,
-				'kodebarang' => $kode,
+				'kode_barang' => $kode,
 				'harga' => $harga
 			];
-			$this->db->insert('pembeli', $data);
+			$this->db->insert('pemenang', $data);
 		}
 	}
 	public function lelang_end(){
@@ -113,4 +104,6 @@ class Model_data extends CI_Model
 		$query = $this->db->query("SELECT * from pembeli where status ='1'");
 		return $query->result_array();
 	}
+
+
 }

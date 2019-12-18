@@ -24,13 +24,20 @@
 								<div class="form-group">
 									<div class="row">
 										<label for="largeInput">Lama Pelelang</label>
-										<input type="number" name="lama_lelang"class="form-control form-control" id="lama" required>
+										<input type="number" name="lama_lelang"class="form-control form-control" id="lama" max="7" required>
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="row">
 										<label for="largeInput">Kelipatan Harga</label>
 										<input type="number" name="kelipatan"class="form-control form-control" id="kelipatan" required>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="row">
+										<label for="largeInput">Deskripsi</label>
+										<textarea class="form-control" id="deskripsi" name="deskripsi" rows="5">
+										</textarea>
 									</div>
 								</div>
 							</div>
@@ -41,7 +48,7 @@
 								</div>
 								<div class="form-group">
 									<div class="button-box">
-										<input type="submit" class="btn btn-primary" value="Lelang">
+										<input type="submit" class="btn btn-success" value="Lelang">
 									</div>
 								</div>
 							</div>

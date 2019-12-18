@@ -7,6 +7,7 @@ class User extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('model_data');
+		$this->load->model('model_user');
 	}
 	public function index()
 	{
@@ -63,7 +64,7 @@ class User extends CI_Controller
 		$uid = $this->session->uid;
 		if (isset($uid)) {
 			$data['end'] = $this->model_data->lelang_end();
-		//	$data['user'] = $this->model_data->get_pembeli();
+			//	$data['user'] = $this->model_data->get_pembeli();
 			$this->load->template('users/lelang_end',$data);
 		} else {
 			redirect('/login');
@@ -99,10 +100,35 @@ class User extends CI_Controller
 	{
 		$this->load->template('users/register');
 	}
-	public function register()
+	public function input(){
+		if (isset($this->session->uid)) {
+			$this->load->template('input');
+		}
+	}
+	public function profil($id){
+		if (isset($this->session->uid)) {
+			$data['profil']= $this->model_data->detail_user($id);
+			$this->load->template('users/profil',$data);
+		}
+	}
+	public function lelang()
 	{
-		$this->model_data->register();
-		redirect('/login');
+		$config['upload_path'] = 'uploads/';
+		$config['allowed_types'] = 'jpg|png|jpeg|pdf';
+		$config['max_size']  = '0';
+		$config['remove_space'] = TRUE;
+		$this->upload->initialize($config);
+		$this->load->library('upload', $config); // Load konfigurasi uploadnya
+		if($this->upload->do_upload('gambar')){ // Lakukan upload dan Cek jika proses upload berhasil
+			// Jika berhasil :
+			$file=$this->upload->data();
+			$this->model_data->simpan($file);
+			redirect('/');
+			// echo "Berhasil";
+		}else{
+			// Jika gagal :
+			echo "Gagal";
+		}
 	}
 	public function signin()
 	{
@@ -121,6 +147,39 @@ class User extends CI_Controller
 		} else {
 			$data['failed'] = "1";
 			$this->load->template('login', $data);
+		}
+	}
+	public function register(){
+		$config['upload_path'] = 'uploads/ktp/';
+		$config['allowed_types'] = 'jpg|png|jpeg|pdf';
+		$config['max_size']  = '0';
+		$config['remove_space'] = TRUE;
+		$this->upload->initialize($config);
+		$this->load->library('upload', $config); // Load konfigurasi uploadnya
+		if($this->upload->do_upload('gambar_ktp')){ // Lakukan upload dan Cek jika proses upload berhasil
+			// Jika berhasil :
+			$file=$this->upload->data();
+			$filektp =$file;
+			$config['upload_path'] = 'uploads/kk/';
+			$config['allowed_types'] = 'jpg|png|jpeg|pdf';
+			$config['max_size']  = '0';
+			$config['remove_space'] = TRUE;
+			$this->upload->initialize($config);
+			$this->load->library('upload', $config); // Load konfigurasi uploadnya
+			if($this->upload->do_upload('gambar_kk')){ // Lakukan upload dan Cek jika proses upload berhasil
+				// Jika berhasil :
+				$file=$this->upload->data();
+				$filekk =$file;
+				$this->model_user->register($filektp,$filekk);
+				redirect('/');
+				// echo "Berhasil";
+			}else{
+				// Jika gagal :
+				echo "Gagal Upload Kk";
+			}
+		}else{
+			// Jika gagal :
+			echo "Gagal Upload Ktp";
 		}
 	}
 }
