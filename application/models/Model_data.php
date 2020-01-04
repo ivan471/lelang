@@ -17,7 +17,7 @@ class Model_data extends CI_Model
 			'berakhir' => date('Y-m-d', strtotime('+' . $tgl . 'days', strtotime($tgl1))),
 			'kelipatan_harga' => $this->input->post('kelipatan'),
 			'link_gambar' => $file['file_name'],
-			'pemilik' => $this->session->nama,
+			'id_pemilik' => $this->session->nama,
 			'deskripsi' => $this->input->post('deskripsi'),
 			'status' => '0'
 		];
@@ -30,6 +30,16 @@ class Model_data extends CI_Model
 		// $query = $this->db->query("SELECT * from barang");
 		return $query->result_array();
 	}
+	public function inbox($id)
+	{
+		$query = $this->db->query("SELECT * from barang inner join pemenang using(kode_barang) inner join users using(id_user) where status ='1' and pemenang.id_user ='".$id."' ");
+		return $query->result_array();
+	}
+	public function tampilkan_lelang_user($id)
+	{
+		$query = $this->db->query("SELECT * from barang inner join pemenang using(kode_barang) inner join users using(id_user) where id_pemilik ='".$id."'");
+		return $query->result_array();
+	}
 	public function signin($nama, $pass1)
 	{
 		$sql = "SELECT * FROM users WHERE username='" . $nama . "' and password='" . $pass1 . "'";
@@ -38,7 +48,7 @@ class Model_data extends CI_Model
 	}
 	public function detail($id)
 	{
-		$sql = "SELECT * FROM barang WHERE kode_barang='" . $id . "'";
+		$sql = "SELECT * FROM barang inner join users on barang.id_pemilik = users.id_user WHERE kode_barang='" . $id . "'";
 		$query = $this->db->query($sql);
 		return $query->row_array();
 	}
@@ -55,11 +65,11 @@ class Model_data extends CI_Model
 	}
 	public function comment($id, $kode)
 	{
-		$query = $this->db->query("SELECT * FROM komentar where id_user='" . $id . "' and kode_barang=" . $kode . "");
+		$query = $this->db->query("SELECT * FROM komentar where id_user='" . $id . "' and kode_barang='" . $kode . "'");
 		$row = $query->row();
-		$data1 = $row['id_komentar'];
+		$data1 = $row->id_komentar;
 		if (isset($data1)) {
-			$data = array('harga' => $this->input->post('harga'), 'waktu' => date('Y-m-d H:i:s'));
+			$data = array('harga_diminta' => $this->input->post('harga'), 'waktu' => date('Y-m-d H:i:s'));
 			$this->db->where('id_komentar', $data1);
 			$this->db->update('komentar', $data);
 		} else {
@@ -80,9 +90,9 @@ class Model_data extends CI_Model
 		for ($i=0; $i <$baris ; $i++) {
 			$query = $this->db->query("SELECT * FROM barang where berakhir >= $tgl and status='0' ORDER BY berakhir asc LIMIT 1");
 			$row = $query->row();
-			$kode = $row->kodebarang;
+			$kode = $row->kode_barang;
 			$data = array('status' => '1');
-			$this->db->where('kodebarang', $kode);
+			$this->db->where('kode_barang', $kode);
 			$this->db->update('barang', $data);
 			$query = $this->db->query("SELECT * FROM komentar where kode_barang ='".$kode."' ORDER BY harga_diminta desc LIMIT 1");
 			$row = $query->row();
@@ -97,7 +107,7 @@ class Model_data extends CI_Model
 		}
 	}
 	public function lelang_end(){
-		$query = $this->db->query("SELECT * from barang where status ='1'");
+		$query = $this->db->query("SELECT * from barang inner join pemenang using(kode_barang) inner join users using(id_user) where status ='1'");
 		return $query->result_array();
 	}
 	public function get_pembeli(){

@@ -25,4 +25,9 @@ class Model_user extends CI_Model
 		$query = $this->db->query("SELECT * from users where id_user ='".$id."'");
 		return $query->row_array();
 	}
+	public function reset(){
+		$data = array('password' => md5($this->input->post('password')));
+		$this->db->where('email', $this->input->post('email'));
+		$this->db->update('users', $data);
+	}
 }

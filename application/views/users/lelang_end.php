@@ -16,9 +16,9 @@
                     <div class="card-body">
                       <div class="d-flex">
                         <div class="info-post ml-2">
-                          <h3><?= $b['nama'] ?></h3>
-                          <p class="date text-muted">Rp.<?= $b['harga_awal'] ?></p>
-                          <p>Pemenang = </p>
+                          <h3><?= $b['nama_barang'] ?></h3>
+                          <p>Pemenang = <?= $b['nama_user'] ?></p>
+                          <p class="date text-muted">Senilai Rp.<?= $b['harga'] ?></p>
                         </div>
                       </div>
                       <div class="separator-solid"></div>

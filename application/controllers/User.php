@@ -12,8 +12,8 @@ class User extends CI_Controller
 	public function index()
 	{
 		$this->model_data->cek_lelang();
-		$uid = $this->session->uid;
-		if (isset($uid)) {
+		//$uid = $this->session->uid;
+		// if (isset($uid)) {
 			//Pagination
 			$this->load->library('pagination');
 			$config['base_url'] = 'http://localhost/lelang/';
@@ -45,16 +45,16 @@ class User extends CI_Controller
 			$this->pagination->initialize($config);
 			//$data['brg'] = $this->model_data->tampilkan();
 			$this->load->template('users/home', $data);
-		} else {
-			redirect('/login');
-		}
+		// } else {
+		// 	redirect('/login');
+		// }
 	}
-	public function history()
+	public function history($id)
 	{
 		$uid = $this->session->uid;
 		if (isset($uid)) {
-			$data['brg'] = $this->model_data->tampilkan();
-			$this->load->template('users/history');
+			$data['brg'] = $this->model_data->tampilkan_lelang_user($id);
+			$this->load->template('users/history',$data);
 		} else {
 			redirect('/login');
 		}
@@ -66,6 +66,17 @@ class User extends CI_Controller
 			$data['end'] = $this->model_data->lelang_end();
 			//	$data['user'] = $this->model_data->get_pembeli();
 			$this->load->template('users/lelang_end',$data);
+		} else {
+			redirect('/login');
+		}
+	}
+	public function inbox($id)
+	{
+		$uid = $this->session->uid;
+		if (isset($uid)) {
+			$data['end'] = $this->model_data->inbox($id);
+			//	$data['user'] = $this->model_data->get_pembeli();
+			$this->load->template('users/inbox',$data);
 		} else {
 			redirect('/login');
 		}
@@ -100,6 +111,15 @@ class User extends CI_Controller
 	{
 		$this->load->template('users/register');
 	}
+	public function reset()
+	{
+		$this->load->template('users/resetpassword');
+	}
+	public function rest()
+	{
+		$this->model_user->reset();
+		redirect('/');
+	}
 	public function input(){
 		if (isset($this->session->uid)) {
 			$this->load->template('input');
@@ -107,7 +127,7 @@ class User extends CI_Controller
 	}
 	public function profil($id){
 		if (isset($this->session->uid)) {
-			$data['profil']= $this->model_data->detail_user($id);
+			$data['profil']= $this->model_user->detail_user($id);
 			$this->load->template('users/profil',$data);
 		}
 	}

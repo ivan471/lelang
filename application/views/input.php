@@ -2,7 +2,7 @@
 	<div class="content">
 		<div class="page-inner">
 			<div class="mt-2 mb-4">
-				<h2 class="text-white pb-2">Input Data Barang Yang Dilelang</h2>
+				<h1 class="text-black pb-2">Input Data Barang Yang Dilelang</h1>
 			</div>
 			<div class="card">
 				<div class="card-body">

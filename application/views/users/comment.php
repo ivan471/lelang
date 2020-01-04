@@ -1,10 +1,10 @@
 <div class="main-panel">
 	<div class="content">
 		<div class="page-inner">
-			<div class="page-header">
-				<h4 class="page-tittle">Detail Barang</h4>
-			</div>
 			<div class="col-md-12">
+				<div class="page-header">
+					<h1 class="page-tittle">Detail Barang</h1>
+				</div>
 				<div class="card">
 					<div class="card-body">
 						<div class="row">
@@ -14,7 +14,7 @@
 							<div class="col-md-6">
 								<div class="content">
 									<h1><?= $detail['nama_barang']; ?></h1>
-									<h4><?= $detail['pemilik']; ?></h4>
+									<h4><?= $detail['nama_user']; ?></h4>
 									<div class="row">
 										<div class="col-md-5">
 											<h3>Harga Awal</h3>
@@ -34,6 +34,7 @@
 					<p><?= $detail['deskripsi']; ?></p>
 				</div>
 			</div>
+			<?php	if ($this->session->uid != $detail['id_pemilik']) { ?>
 			<div class="col-md-5">
 				<div class="card card-comment-input">
 					<div class="card-body">
@@ -47,12 +48,13 @@
 								<?php }else {?>
 									<input class="form-control input-border-bottom" type="number" step="<?= $detail['kelipatan_harga'] ?>" min="<?= $detail['harga_awal']; ?>" name="harga" value="<?= $detail['harga_awal']; ?>">
 								<?php } ?>
-								<button class="btn btn-primary mt-2"type="submit" name="button">Tambah</button>
+								<button class="btn btn-primary mt-2"type="submit" name="button">Pasang Harga</button>
 							</div>
 						</form>
 					</div>
 				</div>
 			</div>
+		<?php } ?>
 			<div class="col-md-5">
 				<?php foreach ($komentar as $kot): ?>
 					<div class="card card-comment">

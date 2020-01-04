@@ -2,7 +2,7 @@
 	<div class="content">
 		<div class="page-inner">
 			<div class="mt-2 mb-4">
-				<h2 class="text-white pb-2">Login</h2>
+				<h2 class="text-black pb-2">Login User</h2>
 			</div>
 			<div class="col-6">
 				<div class="card">
@@ -31,7 +31,7 @@
 										</div>
 									</div>
 									<a class="username ml-2 mr-5" href="<?= base_url().'page_register' ?>">Not Have Account!!</a>
-									<a class="username" href="<?= base_url().'' ?>">Forget Password!!</a>
+									<a class="username" href="<?= base_url().'reset_password' ?>">Forget Password!!</a>
 								</div>
 							</form>
 						</div>
