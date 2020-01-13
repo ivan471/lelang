@@ -29,10 +29,10 @@
                         </div>
                         <div class="separator-solid"></div>
                         <?php if (date("Y-m-d") < $b['berakhir']) { ?>
-                          <center>
-                            <a href="<?= base_url() . 'detail/' . $b['kode_barang']; ?>" class="btn btn-primary btn-rounded btn-sm button-font">Lihat</a>
-                            <a href="<?= base_url() . 'detail/' . $b['kode_barang']; ?>" class="btn btn-primary btn-rounded btn-sm button-font">Edit</a>
-                          </center>
+                            <div class="row">
+                              <a href="<?= base_url() . 'detail/' . $b['kode_barang']; ?>" class="btn btn-info btn-rounded btn-sm button-font ml-4"><i class="fa fa-info mr-2"></i>Lihat</a>
+                              <a href="<?= base_url() . 'edit/' . $b['kode_barang']; ?>" class="btn btn-info btn-rounded btn-sm button-font ml-4 mt-3"><i class="far fa-edit mr-2"></i>Edit</a>
+                            </div>
                         <?php } else { ?>
                           <div class="alert alert-danger" role="alert">Lelang Ditutup</div>
                         <?php } ?>

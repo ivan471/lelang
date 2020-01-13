@@ -37,7 +37,7 @@
               <ul class="dropdown-menu dropdown-user animated fadeIn">
                 <div class="dropdown-user-scroll scrollbar-outer">
                   <li>
-                    <a class="dropdown-item" href="<?= base_url() . 'login' ?>">login</a>
+                    <a class="dropdown-item" href="<?= base_url() . 'login' ?>">Login</a>
                   </li>
                 </div>
               </ul>

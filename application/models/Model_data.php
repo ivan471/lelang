@@ -17,7 +17,7 @@ class Model_data extends CI_Model
 			'berakhir' => date('Y-m-d', strtotime('+' . $tgl . 'days', strtotime($tgl1))),
 			'kelipatan_harga' => $this->input->post('kelipatan'),
 			'link_gambar' => $file['file_name'],
-			'id_pemilik' => $this->session->nama,
+			'id_pemilik' => $this->session->uid,
 			'deskripsi' => $this->input->post('deskripsi'),
 			'status' => '0'
 		];
@@ -37,7 +37,7 @@ class Model_data extends CI_Model
 	}
 	public function tampilkan_lelang_user($id)
 	{
-		$query = $this->db->query("SELECT * from barang inner join pemenang using(kode_barang) inner join users using(id_user) where id_pemilik ='".$id."'");
+		$query = $this->db->query("SELECT * from barang  inner join users on barang.id_pemilik = users.id_user where id_pemilik ='".$id."'");
 		return $query->result_array();
 	}
 	public function signin($nama, $pass1)
@@ -46,8 +46,12 @@ class Model_data extends CI_Model
 		$query = $this->db->query($sql);
 		return $query->row_array();
 	}
-	public function detail($id)
-	{
+	public function detail($id){
+		$sql = "SELECT * FROM barang inner join users on barang.id_pemilik = users.id_user WHERE kode_barang='" . $id . "'";
+		$query = $this->db->query($sql);
+		return $query->row_array();
+	}
+	public function tampil_edit_brg($id){
 		$sql = "SELECT * FROM barang inner join users on barang.id_pemilik = users.id_user WHERE kode_barang='" . $id . "'";
 		$query = $this->db->query($sql);
 		return $query->row_array();
@@ -62,6 +66,12 @@ class Model_data extends CI_Model
 	{
 		$query = $this->db->query("SELECT * FROM komentar WHERE kode_barang='" . $id . "'ORDER BY harga_diminta desc limit 1");
 		return $query->row_array();
+	}
+	public function edit($id)
+	{
+		$data = array('nama_barang' => $this->input->post('nama_barang'), 'lama_lelang' => $this->input->post('lama_lelang'),'deskripsi' => $this->input->post('deskripsi'),'kelipatan_harga' => $this->input->post('kelipatan'));
+		$this->db->where('kode_barang', $id);
+		$this->db->update('barang', $data);
 	}
 	public function comment($id, $kode)
 	{

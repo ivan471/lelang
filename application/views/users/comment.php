@@ -55,13 +55,14 @@
 				</div>
 			</div>
 		<?php } ?>
-			<div class="col-md-5">
+			<div class="col-md-4">
+				<h3>Daftar Pembeli Lelang</h3>
 				<?php foreach ($komentar as $kot): ?>
 					<div class="card card-comment">
 						<div class="card-body">
 							<h5 class="card-title"><?= $kot['nama_user'] ?></h5>
-							<p class="card-text">Rp.<?= $kot['harga_diminta'] ?></p>
-							<p class="card-text"><small class="text-muted"><?= $kot['waktu'] ?></small></p>
+							<h5 class="card-text">Rp.<?= $kot['harga_diminta'] ?></h4>
+							<h4 class="card-text"><small class="text-muted"><?= $kot['waktu'] ?></small></h4>
 						</div>
 					</div>
 				<?php endforeach; ?>

@@ -1,14 +1,16 @@
 <div class="main-panel">
   <div class="content">
     <div class="page-inner">
-      <div class="card">
-        <div class="card-body">
-          <div class="row row-demo-grid">
-            <?php if (empty($end)) { ?>
-              <center>
-                <h4 id="info"> Tidak Ada Perlelangan</h4>
-              </center>
-            <?php } else { ?>
+      <div class="card border-dark">
+        <div class="card-header">
+          <?php if (empty($end)) { ?>
+            <center>
+              <h4 id="info"> Tidak Ada Perlelangan</h4>
+            </center>
+          <?php } else { ?>
+          </div>
+          <div class="card-body">
+            <div class="row row-demo-grid">
               <?php foreach ($end as $b) : ?>
                 <div class="col-xl-3">
                   <div class="card card-post card-round">

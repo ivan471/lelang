@@ -27,7 +27,7 @@
 									</div>
 									<div class="form-group">
 										<div class="button-box">
-											<input type="submit" class="btn btn-primary" value="Login">
+											<button type="submit" class="btn btn-secondary"><i class="fas fa-sign-in-alt mr-2"></i>Login</button>
 										</div>
 									</div>
 									<a class="username ml-2 mr-5" href="<?= base_url().'page_register' ?>">Not Have Account!!</a>
